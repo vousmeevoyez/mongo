@@ -1,0 +1,33 @@
+version: '3'
+services:
+  mongo:
+    hostname: mongo
+    image: mongo:latest
+    ports:
+      - 27021:27017
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "mongo-rs", "--keyFile", "/opt/mongodb-keyfile"]
+    volumes:
+      - "./:/opt"
+      - "mongo-prim-vol:/data/db"
+    networks:
+    - mongo-rs-net
+
+  mongo2:
+    hostname: mongo2
+    image: mongo:latest
+    ports:
+      - 27022:27017
+    entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "mongo-rs", "--keyFile", "/opt/mongodb-keyfile"]
+    volumes:
+      - "./:/opt"
+      - "mongo-sec-vol:/data/db"
+    networks:
+    - mongo-rs-net
+
+networks:
+mongo-rs-net:
+  external: true
+
+volumes:
+  mongo-primary-vol:
+  mongo-seconday-vol:
