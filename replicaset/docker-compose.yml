@@ -8,7 +8,7 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "mongo-rs", "--keyFile", "/opt/mongodb-keyfile"]
     volumes:
       - "./:/opt"
-      - "mongo-prim-vol:/data/db"
+      - "mongo-primary-vol:/data/db"
     networks:
     - mongo-rs-net
 
@@ -20,14 +20,14 @@ services:
     entrypoint: [ "/usr/bin/mongod", "--bind_ip_all", "--replSet", "mongo-rs", "--keyFile", "/opt/mongodb-keyfile"]
     volumes:
       - "./:/opt"
-      - "mongo-sec-vol:/data/db"
+      - "mongo-secondary-vol:/data/db"
     networks:
-    - mongo-rs-net
+      - mongo-rs-net
 
 networks:
-mongo-rs-net:
-  external: true
+  mongo-rs-net:
+    external: true
 
 volumes:
   mongo-primary-vol:
-  mongo-seconday-vol:
+  mongo-secondary-vol:
